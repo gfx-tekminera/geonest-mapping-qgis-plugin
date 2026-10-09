@@ -29,6 +29,7 @@ import os.path
 
 from .geonest_mapping_plugin_dialog import GeonestMappingPluginDialog
 from .geonest_mapping_expressions import geomaplib_to_hex
+from .scripts.generate_line_symbology_xml import create_linestyle_xml
 
 class GeonestMappingPlugin:
     """QGIS Plugin Implementation."""
@@ -184,6 +185,9 @@ class GeonestMappingPlugin:
             './Geonest-Mapping-Marker-Style.xml'))
             default_style.importXml(fillxmlpath)
             default_style.importXml(markerxmlpath)
+            # line xml generated on install
+            linexmlpath = create_linestyle_xml(self.plugin_dir)
+            default_style.importXml(linexmlpath)
 
         # will be set False in run()
         self.first_start = True
