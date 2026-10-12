@@ -1,6 +1,56 @@
 import os
 import uuid
 
+def poly_default_xml(fill_uuid, name='drawing_poly'):
+  template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="{name}" tags="Geonest Mapping" type="fill">
+      <data_defined_properties>
+        <Option type="Map">
+          <Option name="name" type="QString" value=""/>
+          <Option name="properties"/>
+          <Option name="type" type="QString" value="collection"/>
+        </Option>
+      </data_defined_properties>
+      <layer class="SimpleFill" enabled="1" id="{{{fill_uuid}}}" locked="0" pass="0">
+        <Option type="Map">
+          <Option name="border_width_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
+          <Option name="color" type="QString" value="255,255,255,255,hsv:1,0,1,1"/>
+          <Option name="joinstyle" type="QString" value="bevel"/>
+          <Option name="offset" type="QString" value="0,0"/>
+          <Option name="offset_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
+          <Option name="offset_unit" type="QString" value="MM"/>
+          <Option name="outline_color" type="QString" value="35,35,35,255,rgb:0.1372549,0.1372549,0.1372549,1"/>
+          <Option name="outline_style" type="QString" value="solid"/>
+          <Option name="outline_width" type="QString" value="0.26"/>
+          <Option name="outline_width_unit" type="QString" value="Pixel"/>
+          <Option name="style" type="QString" value="solid"/>
+        </Option>
+        <data_defined_properties>
+          <Option type="Map">
+            <Option name="name" type="QString" value=""/>
+            <Option name="properties" type="Map">
+              <Option name="fillColor" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="'#' + upper(geomaplib_to_hex(floor(coalesce(&quot;fill-opacity&quot;, 0) * 255), 2)) + substr(&quot;fill&quot;, 2, 2) +  substr(&quot;fill&quot;, 4, 2) +  substr(&quot;fill&quot;, 6, 2)"/>
+                <Option name="type" type="int" value="3"/>
+              </Option>
+              <Option name="outlineColor" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="'#' + upper(geomaplib_to_hex(floor(coalesce(&quot;stroke-opacity&quot;, 0) * 255), 2)) + substr(&quot;stroke&quot;, 2, 2) +  substr(&quot;stroke&quot;, 4, 2) +  substr(&quot;stroke&quot;, 6, 2)"/>
+                <Option name="type" type="int" value="3"/>
+              </Option>
+              <Option name="outlineWidth" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="&quot;stroke-width&quot;"/>
+                <Option name="type" type="int" value="3"/>
+              </Option>
+            </Option>
+            <Option name="type" type="QString" value="collection"/>
+          </Option>
+        </data_defined_properties>
+      </layer>
+    </symbol>\n"""
+  return template
+
 def poly_fill_xml(label, assetpath, svg_uuid=uuid.uuid4(), fill_uuid=uuid.uuid4()):
     template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="{label}" tags="Geonest Mapping" type="fill">
       <data_defined_properties>
@@ -123,6 +173,10 @@ def main():
             lexml = poly_fill_xml(label=label, assetpath=assetpath,
                                   svg_uuid=uuid.uuid4(), fill_uuid=uuid.uuid4())
             we.write(lexml)
+        lexml = poly_default_xml(uuid.uuid4())
+        we.write(lexml)
+        lexml = poly_default_xml(uuid.uuid4(), 'Pattern00')
+        we.write(lexml)
         we.write("""  </symbols>\n""")
         we.write("""  <colorramps/>\n""")
         we.write("""  <textformats/>\n""")
