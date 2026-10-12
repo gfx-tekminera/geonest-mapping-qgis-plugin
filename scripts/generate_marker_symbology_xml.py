@@ -1,8 +1,8 @@
 import os
 import uuid
 
-def marker_pattern_xml(label, assetpath, marker_uuid, bg_uuid, svg_uuid):
-    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="{label}" tags="Geonest Mapping" type="marker">
+def marker_lithology_xml(lithology_dir, marker_uuid, bg_uuid, svg_uuid):
+    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="lithology" tags="Geonest Mapping" type="marker">
       <data_defined_properties>
         <Option type="Map">
           <Option name="name" type="QString" value=""/>
@@ -32,7 +32,7 @@ def marker_pattern_xml(label, assetpath, marker_uuid, bg_uuid, svg_uuid):
             <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
-        <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="@{label}@0" type="fill">
+        <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="@lithology@0" type="fill">
           <data_defined_properties>
             <Option type="Map">
               <Option name="name" type="QString" value=""/>
@@ -73,7 +73,7 @@ def marker_pattern_xml(label, assetpath, marker_uuid, bg_uuid, svg_uuid):
               <Option name="parameters"/>
               <Option name="pattern_width_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
               <Option name="pattern_width_unit" type="QString" value="MM"/>
-              <Option name="svgFile" type="QString" value="{assetpath}"/>
+              <Option name="svgFile" type="QString" value="polygon_patterns/igneous/banded.svg"/>
               <Option name="svg_outline_width_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
               <Option name="svg_outline_width_unit" type="QString" value="MM"/>
               <Option name="width" type="QString" value="6"/>
@@ -81,18 +81,24 @@ def marker_pattern_xml(label, assetpath, marker_uuid, bg_uuid, svg_uuid):
             <data_defined_properties>
               <Option type="Map">
                 <Option name="name" type="QString" value=""/>
-                <Option name="properties"/>
+                <Option name="properties" type="Map">
+                  <Option name="file" type="Map">
+                    <Option name="active" type="bool" value="true"/>
+                    <Option name="expression" type="QString" value="'{lithology_dir}/'|| string_to_array(&quot;marker-symbol&quot;, ':')[0] ||'/'|| string_to_array(&quot;marker-symbol&quot;, ':')[1] ||'.svg'"/>
+                    <Option name="type" type="int" value="3"/>
+                  </Option>
+                </Option>
                 <Option name="type" type="QString" value="collection"/>
               </Option>
             </data_defined_properties>
           </layer>
         </symbol>
       </layer>
-    </symbol>"""
+    </symbol>\n"""
     return template
 
-def marker_structure_xml(label, assetpath, svg_uuid):
-    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="{label}" tags="Geonest Mapping" type="marker">
+def marker_structure_xml(structure_dir, svg_uuid):
+    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="structure" tags="Geonest Mapping" type="marker">
       <data_defined_properties>
         <Option type="Map">
           <Option name="name" type="QString" value=""/>
@@ -106,7 +112,7 @@ def marker_structure_xml(label, assetpath, svg_uuid):
           <Option name="color" type="QString" value="0,0,0,255,rgb:0,0,0,1"/>
           <Option name="fixedAspectRatio" type="QString" value="0"/>
           <Option name="horizontal_anchor_point" type="QString" value="1"/>
-          <Option name="name" type="QString" value="{assetpath}"/>
+          <Option name="name" type="QString" value="placemark_symbols/geomaplib/vertical-bedding-2.svg"/>
           <Option name="offset" type="QString" value="-0.19999999999999987,-0.19999999999999987"/>
           <Option name="offset_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
           <Option name="offset_unit" type="QString" value="MM"/>
@@ -135,6 +141,11 @@ def marker_structure_xml(label, assetpath, svg_uuid):
                 <Option name="expression" type="QString" value="&quot;marker-color&quot;"/>
                 <Option name="type" type="int" value="3"/>
               </Option>
+              <Option name="name" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="'{structure_dir}/'|| &quot;marker-symbol&quot; ||'.svg'"/>
+                <Option name="type" type="int" value="3"/>
+              </Option>
               <Option name="outlineColor" type="Map">
                 <Option name="active" type="bool" value="true"/>
                 <Option name="expression" type="QString" value="&quot;marker-color&quot;"/>
@@ -145,11 +156,11 @@ def marker_structure_xml(label, assetpath, svg_uuid):
           </Option>
         </data_defined_properties>
       </layer>
-    </symbol>"""
+    </symbol>\n"""
     return template
 
-def marker_general_xml(label, assetpath, svg_uuid):
-    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="{label}" tags="Geonest Mapping" type="marker">
+def marker_general_xml(general_dir, svg_uuid):
+    template = f"""    <symbol alpha="1" clip_to_extent="1" force_rhr="0" frame_rate="10" is_animated="0" name="general" tags="Geonest Mapping" type="marker">
       <data_defined_properties>
         <Option type="Map">
           <Option name="name" type="QString" value=""/>
@@ -163,7 +174,7 @@ def marker_general_xml(label, assetpath, svg_uuid):
           <Option name="color" type="QString" value="0,0,0,255,rgb:0,0,0,1"/>
           <Option name="fixedAspectRatio" type="QString" value="0"/>
           <Option name="horizontal_anchor_point" type="QString" value="1"/>
-          <Option name="name" type="QString" value="{assetpath}"/>
+          <Option name="name" type="QString" value="placemark_symbols/mapbox-maki/circle.svg"/>
           <Option name="offset" type="QString" value="-0.19999999999999987,-0.19999999999999987"/>
           <Option name="offset_map_unit_scale" type="QString" value="3x:0,0,0,0,0,0"/>
           <Option name="offset_unit" type="QString" value="MM"/>
@@ -187,19 +198,26 @@ def marker_general_xml(label, assetpath, svg_uuid):
                 <Option name="expression" type="QString" value="&quot;marker-color&quot;"/>
                 <Option name="type" type="int" value="3"/>
               </Option>
+              <Option name="name" type="Map">
+                <Option name="active" type="bool" value="true"/>
+                <Option name="expression" type="QString" value="'{general_dir}/'|| &quot;marker-symbol&quot; ||'.svg'"/>
+                <Option name="type" type="int" value="3"/>
+              </Option>
             </Option>
             <Option name="type" type="QString" value="collection"/>
           </Option>
         </data_defined_properties>
       </layer>
-    </symbol>"""
+    </symbol>\n"""
     return template
 
-def main():
-    script_dir = os.path.dirname(os.path.realpath(__file__))
-    repo_dir = os.path.realpath(os.path.join(script_dir, '..'))
-    symbol1_dir = os.path.join(repo_dir, 'placemark_symbols');
-    symbol2_dir = os.path.join(repo_dir, 'polygon_patterns');
+def create_markerstyle_xml(plugin_path):
+    repo_dir = os.path.realpath(plugin_path)
+    vector_dir = os.path.join(repo_dir, 'placemark_symbols');
+
+    general_dir = os.path.join(vector_dir, 'mapbox-maki');
+    structure_dir = os.path.join(vector_dir, 'geomaplib');
+    lithology_dir = os.path.join(repo_dir, 'polygon_patterns');
 
     outputfile_path = os.path.realpath(
             os.path.join(repo_dir, 'Geonest-Mapping-Marker-Style.xml'))
@@ -208,48 +226,13 @@ def main():
         we.write("""<!DOCTYPE qgis_style>\n""")
         we.write("""<qgis_style version="2">\n""")
         we.write("""  <symbols>\n""")
-        lithologies = os.listdir(path=symbol2_dir)
-        for lithology in lithologies:
-            lithodir_path = os.path.realpath(os.path.join(symbol2_dir, lithology))
-            filenames = [item for item in os.listdir(lithodir_path) if
-                         item.endswith('svg')]
-            for filename in filenames:
-                label = lithology + ':' + filename.replace('.svg', '')
-                assetpath = os.path.realpath(os.path.join(lithodir_path, filename))
-                assetpath = assetpath.replace(repo_dir, '')
-                if (assetpath.startswith('/')):
-                    assetpath = assetpath[1:]
-                lexml = marker_pattern_xml(label=label, assetpath=assetpath,
-                                           marker_uuid=uuid.uuid4(),
-                                           bg_uuid=uuid.uuid4(),
-                                           svg_uuid=uuid.uuid4())
-                we.write(lexml)
-
-        makidir_path = os.path.realpath(os.path.join(symbol1_dir, 'mapbox-maki'))
-        makiicons = [item for item in os.listdir(makidir_path) if
-                     item.endswith('svg')]
-        for filename in makiicons:
-            label = filename.replace('.svg', '')
-            assetpath = os.path.realpath(os.path.join(makidir_path, filename))
-            assetpath = assetpath.replace(repo_dir, '')
-            if assetpath.startswith('/'):
-                assetpath = assetpath[1:]
-            lexml = marker_general_xml(label=label, assetpath=assetpath,
-                                       svg_uuid=uuid.uuid4())
-            we.write(lexml)
-
-        geomaplibdir_path = os.path.realpath(os.path.join(symbol1_dir, 'geomaplib'))
-        geomaplibicons = [item for item in os.listdir(geomaplibdir_path) if
-                          item.endswith('svg')]
-        for filename in geomaplibicons:
-            label = filename.replace('.svg', '')
-            assetpath = os.path.realpath(os.path.join(geomaplibdir_path, filename))
-            assetpath = assetpath.replace(repo_dir, '')
-            if assetpath.startswith('/'):
-                assetpath = assetpath[1:]
-            lexml = marker_structure_xml(label=label, assetpath=assetpath,
-                                         svg_uuid=uuid.uuid4())
-            we.write(lexml)
+        lexml = marker_general_xml(general_dir, uuid.uuid4())
+        we.write(lexml)
+        lexml = marker_structure_xml(structure_dir, uuid.uuid4())
+        we.write(lexml)
+        lexml = marker_lithology_xml(lithology_dir, uuid.uuid4(), uuid.uuid4(),
+                                     uuid.uuid4())
+        we.write(lexml)
 
         we.write("""  </symbols>\n""")
         we.write("""  <colorramps/>\n""")
@@ -260,4 +243,4 @@ def main():
         we.write("""  <materialsettings/>\n""")
         we.write("""</qgis_style>""")
 
-main()
+        return outputfile_path

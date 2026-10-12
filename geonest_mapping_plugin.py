@@ -30,6 +30,7 @@ import os.path
 from .geonest_mapping_plugin_dialog import GeonestMappingPluginDialog
 from .geonest_mapping_expressions import geomaplib_to_hex
 from .scripts.generate_line_symbology_xml import create_linestyle_xml
+from .scripts.generate_marker_symbology_xml import create_markerstyle_xml
 
 class GeonestMappingPlugin:
     """QGIS Plugin Implementation."""
@@ -181,9 +182,9 @@ class GeonestMappingPlugin:
         if default_style: # why 'None' by default?
             fillxmlpath = os.path.realpath(os.path.join(self.plugin_dir,
             './Geonest-Mapping-Polygon-Pattern-Style.xml'))
-            markerxmlpath = os.path.realpath(os.path.join(self.plugin_dir,
-            './Geonest-Mapping-Marker-Style.xml'))
             default_style.importXml(fillxmlpath)
+            # marker xml generated on install
+            markerxmlpath = create_markerstyle_xml(self.plugin_dir)
             default_style.importXml(markerxmlpath)
             # line xml generated on install
             linexmlpath = create_linestyle_xml(self.plugin_dir)
