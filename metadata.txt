@@ -5,14 +5,16 @@
 
 [general]
 name=Geonest Mapping Plugin
-qgisMinimumVersion=3.2
+qgisMinimumVersion=3.8
 qgisMaximumVersion=4.99
-description=Geonest mapping plugin
-version=0.1
+description=Assets and functions to display Geonest Mapping exported file
+version=0.2
 author=Jatmika Teja
 email=jatmika.teja@tekminera.com
 
-about=Geonest mapping plugins and assets
+about=Assets and functions to display Geonest Mapping exported file.
+    On installing, this plugin will add point, line, and fill styles that can be viewed on Style Manager with tag Geonest Mapping
+    Source: https://github.com/gfx-tekminera/geonest-mapping-qgis-plugin
 
 tracker=https://github.com/gfx-tekminera/geonest-mapping-qgis-plugin/issues
 repository=https://github.com/gfx-tekminera/geonest-mapping-qgis-plugin
